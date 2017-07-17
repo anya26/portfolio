@@ -6,6 +6,85 @@
 	h2 {color:#FF69B4;}
 </style>
 	
+<!-- Home page -->
+<div class="m-scene" id="main">
+  <div class="m-header scene_element scene_element--fadein">
+  </div>
+  <div class="m-page scene_element scene_element--fadeinup">
+  </div>
+</div>
+
+;(function ($) {
+  'use strict';
+  var content  = $('#main').smoothState({
+        // onStart runs as soon as link has been activated
+        onStart : {
+          
+          // Set the duration of our animation
+          duration: 250,
+          
+          // Alterations to the page
+          render: function () {
+
+            // Quickly toggles a class and restarts css animations
+            content.toggleAnimationClass('is-exiting');
+          }
+        }
+      }).data('smoothState'); // makes public methods available
+})(jQuery);
+
+/*
+ * CSS Page Transitions
+ * Don't forget to add vendor prefixes!
+ */
+.m-scene {
+  .scene_element {
+    animation-duration: 0.25s;
+    transition-timing-function: ease-in;
+    animation-fill-mode: both;
+
+  }
+
+  .scene_element--fadein {
+    animation-name: fadeIn;
+  }
+
+  .scene_element--fadeinup {
+    animation-name: fadeInUp;
+  }
+
+  .scene_element--fadeinright {
+    animation-name: fadeInRight;
+  }
+
+  /** Reverse "exit" animations */
+  &.is-exiting {
+      .scene_element {
+        animation-direction: alternate-reverse;
+      }
+  }
+}
+
+
+;(function ($) {
+  'use strict';
+  var $body    = $('html, body'), // Define jQuery collection 
+      content  = $('#main').smoothState({
+        onStart : {
+          duration: 250,
+          render: function () {
+            content.toggleAnimationClass('is-exiting');
+            
+            // Scroll user to the top
+            $body.animate({ 'scrollTop': 0 });
+
+          }
+        }
+      }).data('smoothState');
+})(jQuery)
+	
+
+	
 <title>Page Title</title>
 	
 </head>
