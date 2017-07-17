@@ -11,7 +11,85 @@ p    {color: #000000;
     height:100%;}
 	.boxed {border: 1px #404040;}
 </style>
-	
+
+<!-- Home page -->
+<div class="m-scene" id="main">
+  <div class="m-header scene_element scene_element--fadein">
+    ...
+  </div>
+  <div class="m-page scene_element scene_element--fadeinup">
+    ...
+  </div>
+</div>
+
+;(function ($) {
+  'use strict';
+  var content  = $('#main').smoothState({
+        // onStart runs as soon as link has been activated
+        onStart : {
+          
+          // Set the duration of our animation
+          duration: 250,
+          
+          // Alterations to the page
+          render: function () {
+
+            // Quickly toggles a class and restarts css animations
+            content.toggleAnimationClass('is-exiting');
+          }
+        }
+      }).data('smoothState'); // makes public methods available
+})(jQuery);
+
+/*
+ * CSS Page Transitions
+ * Don't forget to add vendor prefixes!
+ */
+.m-scene {
+  .scene_element {
+    animation-duration: 0.25s;
+    transition-timing-function: ease-in;
+    animation-fill-mode: both;
+
+  }
+
+  .scene_element--fadein {
+    animation-name: fadeIn;
+  }
+
+  .scene_element--fadeinup {
+    animation-name: fadeInUp;
+  }
+
+  .scene_element--fadeinright {
+    animation-name: fadeInRight;
+  }
+
+  /** Reverse "exit" animations */
+  &.is-exiting {
+      .scene_element {
+        animation-direction: alternate-reverse;
+      }
+  }
+}
+
+
+;(function ($) {
+  'use strict';
+  var $body    = $('html, body'), // Define jQuery collection 
+      content  = $('#main').smoothState({
+        onStart : {
+          duration: 250,
+          render: function () {
+            content.toggleAnimationClass('is-exiting');
+            
+            // Scroll user to the top
+            $body.animate({ 'scrollTop': 0 });
+
+          }
+        }
+      }).data('smoothState');
+})(jQuery)
 
 <div style='position:absolute;z-index:-10;left:0;top:0;width:100%;height:400%'>
  <img src='https://mail.google.com/mail/u/0/?ui=2&ik=bc49c145d7&view=fimg&th=15d2dbaab100b63a&attid=0.1.1&disp=emb&attbid=ANGjdJ_JwvFoy63-ohAVIKNC6GG41MhopAb4zGXNa96SK6LUL-M4santTsIo5yIw0ed1s9LrNix345tfbsvNEhjoAA3VEMoWzQIYb2jETj0sXOrDjkcXnGLV74lOXV8&sz=s0-l75-ft&ats=1499710927934&rm=15d2dbaab100b63a&zw&atsh=1;' style='width:100%;height:100%' alt='[]' />
